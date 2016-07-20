@@ -12,6 +12,7 @@ source ./hacking/env-setup
 comment fisrt row with ssl paths in /usr/lib/python2.7/site-packages/setuptools/ssl_support.py
 sudo easy_install pip
 yum groupinstall -y 'development tools'
+udo pip install pyOpenSSL
 sudo yum install pycrypto
 sudo pip install --trusted-host pypi.python.org --index-url=http://pypi.python.org/simple/ paramiko PyYAML Jinja2 httplib2 six
 git pull --rebase

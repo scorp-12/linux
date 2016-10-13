@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - action: ec2_facts 
+  - name: terminate all instances
+    ec2: 
+      state: 'absent'
+      region: us-east-1
+      instance_ids: 
+        with_items: 
+          - '{{ ansible_ec2_instance_id }}'

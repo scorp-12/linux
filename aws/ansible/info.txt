@@ -1,0 +1,9 @@
+aws configure
+=provide keys
+=region is us-east-1
+export AWS_ACCESS_KEY_ID=''                                                                                      
+export AWS_SECRET_ACCESS_KEY=''                                                              
+to check connectivity
+=aws ec2 describe-regions
+to show instances
+=aws ec2 describe-instances

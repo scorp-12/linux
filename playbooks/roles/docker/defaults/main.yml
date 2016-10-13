@@ -24,7 +24,7 @@ docker_opts: ""
 # List of users to be added to 'docker' system group (disabled by default)
 # SECURITY WARNING: 
 # Be aware that granted users can easily get full root access on the docker host system!
-docker_group_members: []
+docker_group_members: [deduhov]
 # Flags for whether to install pip packages
 pip_install_pip: true
 pip_install_setuptools: true

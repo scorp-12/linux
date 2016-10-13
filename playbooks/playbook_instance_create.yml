@@ -10,7 +10,7 @@
     project_id: dedtest-1352
     machine_type: n1-standard-1
     image: ubuntu-1404
-    names: instance-1
+    names: in4
   tasks:
   - name: creating instances
     gce:

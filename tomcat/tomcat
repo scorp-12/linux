@@ -25,7 +25,17 @@ telnet localhost 8080
 SHUTDOWN
 8) performance tuning
 setenv.sh
-
+=========
+Tomcat 8
+1) The same as tomcat 7 but only with java 8
+unpack tomcat to /opt/tomcat8
+unpack java to /opt/jdk8
+2) add the folowing to /etc/profile
+CATALINA_BASE=/opt/tomcat8 
+CATALINA_HOME=/opt/tomcat8 
+CATALINA_TMPDIR=/opt/tomcat8/temp 
+JAVA_HOME=/opt/jdk8 
+JRE_HOME=/opt/jdk8
 
 
 

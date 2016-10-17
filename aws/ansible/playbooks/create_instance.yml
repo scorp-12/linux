@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files:
+  - files/awskreds.yml
+  tasks:
+  - name: create a new instance
+    ec2: 
+      key_name: k1 
+      instance_type: t2.micro 
+      image: ami-c481fad3
+      wait: yes 
+      count: 1
+      vpc_subnet_id: subnet-14ce2c39
+      assign_public_ip: yes
+      region: us-east-1

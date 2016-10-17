@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: delete ami 
+    ec2_ami: 
+      region: us-east-1
+      image_id: ami-ece8bffb
+      state: absent

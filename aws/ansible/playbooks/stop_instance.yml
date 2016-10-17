@@ -3,11 +3,9 @@
   connection: local
   gather_facts: no
   tasks:
-  - action: ec2_facts 
-  - name: terminate all instances
+  - name: stop instance
     ec2: 
-      state: 'absent'
+      state: 'stopped'
       region: us-east-1
-      instance_ids: 
-        with_items: 
-          - '{{ ansible_ec2_instance_id }}'
+      instance_ids: i-0f0126465ae7a108b
+

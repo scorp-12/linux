@@ -1,3 +1,12 @@
++++++++++++++++
+usefull commands:
+===============
+test remote open ports:
+nmap -sT -0 hostname
+===============
+
++++++++++++++++
+
 19422 6342
 CA Workload Automation AE
 CA Workload Automation CA 7 Edition

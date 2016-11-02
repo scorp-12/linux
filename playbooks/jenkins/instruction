@@ -1,0 +1,98 @@
+Install Jenkins:
+sudo yum install java
+sudo yum install maven
+sudo yum install git
+sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo
+sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+sudo yum install jenkins
+add to /etc/passwd
+jenkins:x:993:988:Jenkins Continuous Integration Server:/var/lib/jenkins:/bin/bash
+create password for jenkins
+install nginx:
+sudo yum install nginx
+disable selinux
+sudo setenforce 0
+configure nginx:
+        location / {
+                proxy_pass http://127.0.0.1:8080;
+                sendfile off;
+                 proxy_redirect     default;
+
+                 proxy_set_header   Host             $host;
+                 proxy_set_header   X-Real-IP        $remote_addr;
+                 proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+                 proxy_max_temp_file_size 0;
+
+                 #this is the maximum upload size
+                 client_max_body_size       10m;
+                 client_body_buffer_size    128k;
+
+                 proxy_connect_timeout      90;
+                 proxy_send_timeout         90;
+                 proxy_read_timeout         90;
+
+                 proxy_buffer_size          4k;
+                 proxy_buffers              4 32k;
+                 proxy_busy_buffers_size    64k;
+                 proxy_temp_file_write_size 64k;
+
+        }
+
+create user at jenkins and get token for user. Token is authentication for insert, start, check status, delete jobs
+
+install jobdsl plugin to jenkins
+
+download jobdsl:
+git clone https://github.com/jenkinsci/job-dsl-plugin.git
+
+cd ~/job-dsl-plugin/
+
+install java jdk
+sudo yum install java-1.7.0-openjdk
+sudo yum install java-1.7.0-openjdk-devel
+
+cd job-dsl-plugin
+./gradlew :job-dsl-core:oneJar
+DSL_JAR=$(find job-dsl-core -name '*standalone.jar'|tail -1)
+
+
+
+create job_dsl file:
+cd job-dsl-core
+
+vim job_dsl:
+job('DSL-Tutorial-2-Test') {
+    scm {
+        git('git://github.com/quidryan/aws-sdk-test.git')
+    }
+    steps {
+        maven('-e clean test')
+    }
+}
+
+start xml generation:
+
+./gradlew run -Pargs=job.dsl
+
+cp generated file DSL-Tutorial-2-Test.xml to ansible templates 
+
+start ansible playbook from this directory.
+
+
+Start job by url:
+
+enable Trigger builds remotely (e.g., from scripts) in job configuration
+
+provide there token. WARNING this mast not be user token but some different token. Generate it at inet
+
+start job execution 
+CRUMB=$(curl -s 'http://USER:TOKEN@localhost:8080/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)')
+it could be changed , but it wroked without changes in test lab. then
+
+curl -H "$CRUMB" http://USER:TOKEN@server_name/job/JOBNAME/build?token=JOBTOKEN
+
+here change USER, TOKEN, JOBTOKEN to real values
+
+
+
+

@@ -1,1 +1,10 @@
-111
+* Rundeck, Jenkins, TeamCity, Bamboo etc. 
+* ApDynamics, NewRelic, Riemann, Sensu, Nagios etc. 
+* Ansible, SaltStack, Chef, Puppet etc. 
+* Ruby, Python, Perl, PHP, Node.Js Bash etc. 
+* Graphite, sensu, InfluxDB, ELK, Grafana etc. 
+* Vagrant, Terraform, 
+* IssueTracker, Slack, Hubot etc. 
+elasticksearch + logstash + kibana
+HAproxy Keepalive GitLab Vagrant Packer Drone Consul Rancher Mesos Marathon Hiera Foreman r10k Sensu Grafana Graphite Splunk Nexus
+rsyslog, bacula, zabbix, Gerrit, Jfrog, Gradle

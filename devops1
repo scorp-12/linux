@@ -10,3 +10,4 @@
 *disaster recovery strategy: Pilot Light, Warm Standby, Methods: Multi-Site solution, AWS-to-AWS multiregion failover and disaster recovery, RTO and RPO
 * queue - rabbit, active, kafka
 * LDAP
+* datadog pagerduty

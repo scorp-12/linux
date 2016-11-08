@@ -11,3 +11,4 @@
 * queue - rabbit, active, kafka
 * LDAP
 * datadog pagerduty
+* Prometheus Alert Manage

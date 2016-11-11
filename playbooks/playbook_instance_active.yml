@@ -1,0 +1,21 @@
+---
+- name: delete instances
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    names: instance-1,instance-2,instance-3
+    service_account_email: dedtest-1352@appspot.gserviceaccount.com
+    credentials_file: /home/ded/ans/ansible/dedtest-97af01ce632d.json
+    project_id: dedtest-1352
+    machine_type: n1-standard-1
+    image: ubuntu-1404
+  tasks:
+    - name: activate instances
+      local_action:
+        module: gce
+        instance_names: "{{ names }}"
+        state: 'active' 
+        zone: europe-west1-c
+

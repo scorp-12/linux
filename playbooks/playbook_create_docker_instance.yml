@@ -1,0 +1,36 @@
+---
+- name: GCE instace_g1
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+    service_account_email: dedtest-1352@appspot.gserviceaccount.com
+    credentials_file: /home/ded/ans/ansible/dedtest-97af01ce632d.json
+    project_id: dedtest-1352
+    machine_type: n1-standard-1
+    image: centos-7
+    names: instance-1
+  tasks:
+  - name: creating instances
+    gce:
+      instance_names: "{{ names }}"
+      machine_type: "{{ machine_type }} "
+      image: "{{ image }}"
+      service_account_email: "{{ service_account_email }}"
+      credentials_file: "{{ credentials_file }}"
+      project_id: "{{ project_id }}"
+      zone: europe-west1-c
+    register: gce
+  - add_host: hostname="{{item.public_ip}}" groups=g1
+    with_items: '{{ gce.instance_data }}'
+
+- name: create docker instance ubuntu
+  hosts: g1 
+  sudo: True
+  tasks:
+  - name: start docker instance ubuntu
+    docker:
+      name: conatainer1
+      image: ubuntu
+      state: started

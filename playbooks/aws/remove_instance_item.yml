@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files:
+  - files/awskreds.yml
+  tasks:
+  - name: get ec2 facts
+    ec2_facts:
+    var: item.value["ec2_id"] 
+    with_dict: "{{ hostvars }}"
+
+  - name: remove ec2 instance 
+    ec2:
+      state: absent
+      region: us-east-1
+      instance_ids: "{{ var }}"

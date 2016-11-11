@@ -1,0 +1,339 @@
++++++++++++++++
+usefull commands:
+===============
+test remote open ports:
+nmap -sT -0 hostname
+===============
+
++++++++++++++++
+
+19422 6342
+CA Workload Automation AE
+CA Workload Automation CA 7 Edition
+CA Workload Automation ESP Edition
+
+ansible
+
+======================
+git clone git://github.com/ansible/ansible.git --recursive
+cd ./ansible
+source ./hacking/env-setup
+comment fisrt row with ssl paths in /usr/lib/python2.7/site-packages/setuptools/ssl_support.py
+sudo easy_install pip
+yum groupinstall -y 'development tools'
+udo pip install pyOpenSSL
+sudo yum install pycrypto
+sudo pip install --trusted-host pypi.python.org --index-url=http://pypi.python.org/simple/ paramiko PyYAML Jinja2 httplib2 six
+git pull --rebase
+git submodule update --init --recursive
+ansible localhost -i .ansible/hosts --ask-pass -a "cat /etc/resolv.conf" -c paramiko
+=====================
+
+sonar
+
+=======================
+sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance
+sonar.web.port=9000
+sonar.jdbc.username=sonar
+sonar.jdbc.password=sonar
+#sonar.jdbc.url=jdbc:h2:tcp://localhost:9092/sonar
+#sonar.embeddedDatabase.port=9092
+=======================
+
+sonar-runner
+
+=======================
+sonar.host.url=http://localhost:9000
+sonar.jdbc.url=jdbc:h2:tcp://localhost:9092/sonar
+sonar.jdbc.driverClassName=org.h2.Driver
+sonar.embeddedDatabase.port=9092
+sonar.jdbc.username=sonar
+sonar.jdbc.password=sonar
+=======================
+
+
+
+sonar analisys properties
+======================
+sonar.projectKey=my:project1
+sonar.projectName=My project1
+sonar.projectVersion=1.0
+sonar.sources=src
+=======================
+
+ansible playbook
+=======================
++adduser
++create ssh-key
++copy ssh to remote server
++add epel-repo
++setup git, htop, vim, wget
++disable selinux
++setup jdk
++copy .bashrc
++add firewall rules
++setup jenkins
++setup sonar
+change configs sonar
+change configs jenkins
++restart sonar
++restat jenkins
+=======================
+
+
+---
+- hosts: t2
+  gather_facts: no
+  tasks:
+    - name: add auth key
+      authorized_key: user=ded key="{{ lookup('file', '/home/ded/.ssh/id_rsa.pub')}}"
+- hosts: t2
+  tasks:
+    - name: add epel
+      command: 'rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm'
+      become: yes
+      become_method: sudo
+    - name: hach .bashrc
+      copy: src=/home/ded/.bashrc dest=/home/ded/.bashrc
+      become: yes
+      become_method: sudo
+    - name: disable selinux
+      selinux: state=disabled
+      become: yes
+      become_method: sudo
+    - name: sed epel repo, change http to https
+      command: "sed -i 's/https/http/g' /etc/yum.repos.d/epel.repo"
+      become: yes
+      become_method: sudo
+    - name: yum clean metadata
+      command: "yum clean metadata"
+      become: yes
+      become_method: sudo
+    - name: install svn
+      yum: name=svn state=present
+      become: yes
+      become_method: sudo
+    - name: install screen
+      yum: name=screen state=present
+      become: yes
+      become_method: sudo
+    - name: install htop
+      yum: name=htop state=present
+      become: yes
+      become_method: sudo
+    - name: install net-tools
+      yum: name=net-tools state=present
+      become: yes
+      become_method: sudo
+    - name: install vim
+      yum: name=vim state=present
+      become: yes
+      become_method: sudo
+    - name: install git
+      yum: name=git state=present
+      become: yes
+      become_method: sudo
+    - name: install mariadb-server (mysql)
+      yum: name=mariadb-server
+      become: yes
+      become_method: sudo
+    - name: install mariadb (mysql)
+      yum: name=mariadb
+      become: yes
+      become_method: sudo
+    - name: enable mariadb
+      service: name=mariadb enabled=yes
+      become: yes
+      become_method: sudo
+    - name: install wget
+      yum: name=wget state=present
+      become: yes
+      become_method: sudo
+    - name: install java
+      yum: name=java-1.7.0-openjdk-devel state=present
+      become: yes
+      become_method: sudo
+    - name: Configure YUM repository
+      action: get_url url=http://pkg.jenkins-ci.org/redhat/jenkins.repo dest=/etc/yum.repos.d/jenkins.repo
+      become: yes
+      become_method: sudo
+    - name: Import repository key
+      action: shell rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
+      become: yes
+      become_method: sudo
+    - name: install jenkins
+      action: yum name=jenkins state=present
+      become: yes
+      become_method: sudo
+    - name: sonar
+      command: "wget -O /etc/yum.repos.d/sonar.repo http://downloads.sourceforge.net/project/sonar-pkg/rpm/sonar.repo"
+      become: yes
+      become_method: sudo
+    - name: sonar
+      yum: name=sonar state=present
+      become: yes
+      become_method: sudo
+    - name: enable jenkins
+      service: name=jenkins enabled=yes
+      become: yes
+      become_method: sudo
+    - name: enable sonar
+      service: name=sonar enabled=yes
+      become: yes
+      become_method: sudo
+    - name: stop firewalld
+      command: systemctl stop firewalld
+      become: yes
+      become_method: sudo
+    - name: mask firewalld
+      command: systemctl mask firewalld
+      become: yes
+      become_method: sudo
+    - name: install iptables
+      yum: name=iptables state=present
+      become: yes
+      become_method: sudo
+    - name: iptables save rules
+      command: iptables-save
+      become: yes
+      become_method: sudo
+    - name: setup unzip
+      yum: name=unzip state=present
+      become: yes
+      become_method: sudo
+    - name: wget sonar-runner
+      unarchive: src=http://repo1.maven.org/maven2/org/codehaus/sonar/runner/sonar-runner-dist/2.4/sonar-runner-dist-2.4.zip dest=/opt/ copy=no
+      become: yes
+      become_method: sudo
+    - name: copy sonar-runner.sh
+      copy: src=/home/ded/ansible/sonar-runner.sh dest=/etc/profile.d/sonar-runner.sh
+      become: yes
+      become_method: sudo
+    - name: create symlink sonar-runner
+      file: src=/opt/sonar-runner-2.4/ dest=/opt/sonar-runner owner=root group=root state=link
+      become: yes
+      become_method: sudo
+    - name: mkdir /opt/maven
+      file: path=/opt/maven state=directory owner=root group=root
+      become: yes
+      become_method: sudo
+    - name: copy copy & unpack maven to /opt/maven
+      unarchive: src=http://mirrors.hostingromania.ro/apache.org/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz dest=/tmp/ copy=no
+      become: yes
+      become_method: sudo
+    - name: mv maven to /opt/maven
+      shell: "mv /tmp/apache-maven-3.3.3/* /opt/maven/"
+      become: yes
+      become_method: sudo
+    - name: create symlink for maven
+      file: src=/opt/maven/bin/mvn dest=/usr/bin/mvn state=link
+      become: yes
+      become_method: sudo
+    - name: copy maven.sh to /etc/profile.d/maven.sh
+      copy: src=/home/ded/ansible/maven.sh dest=/etc/profile.d/maven.sh owner=root group=root
+      become: yes
+      become_method: sudo
+    - name: change source
+      shell: "source /etc/profile.d/maven.sh"
+      become: yes
+      become_method: sudo
+    - name: copy sonar.properties
+      copy: src=/home/ded/ansible/sonar.properties dest=/opt/sonar/conf/sonar.properties owner=root group=root
+      become: yes
+      become_method: sudo
+    - name: copy sonar-runner properties
+      copy: src=/home/ded/ansible/sonar-runner.properties dest=/opt/sonar-runner/conf/sonar-runner.properties owner=root group=root
+      become: yes
+      become_method: sudo
+    - name: copy maven settings.xml
+      copy: src=/home/ded/ansible/settings.xml dest=/opt/maven/conf/settings.xml owner=root group=root
+      become: yes
+      become_method: sudo
+    - name: start mariadb
+      service: name=mariadb state=started
+      become: yes
+      become_method: sudo
+    - name: copy db creator
+      copy: src=/home/ded/ansible/db.sql dest=/opt/db.sql owner=root group=root
+      become: yes
+      become_method: sudo
+    - name: create database
+      shell: "mysql -u root < /opt/db.sql"
+      become: yes
+      become_method: sudo
+    - name: add hostname
+      hostname: name=cen6
+      become: yes
+      become_method: sudo
+    - name: "Build hosts file"
+      lineinfile: dest=/etc/hosts line="127.0.0.1 cen6" state=present
+      become: yes
+      become_method: sudo
+
+sonar-runner.sh
+===
+#!/bin/bash
+export SONAR_RUNNER_HOME=/opt/sonar-runner
+export PATH=$PATH:$SONAR_RUNNER_HOME/bin
+
+maven.sh
+===
+#!/bin/bash
+MAVEN_HOME=/opt/maven
+PATH=$MAVEN_HOME/bin:$PATH
+export PATH MAVEN_HOME
+export CLASSPATH=.
+
+sonar.properties
+===
+sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance
+sonar.web.port=9000
+sonar.jdbc.username=sonar
+sonar.jdbc.password=sonar
+#sonar.jdbc.url=jdbc:h2:tcp://localhost:9092/sonar
+#sonar.embeddedDatabase.port=9092
+
+db.sql
+===
+CREATE DATABASE sonar CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE USER 'sonar' IDENTIFIED BY 'sonar';
+GRANT ALL ON sonar.* TO 'sonar'@'%' IDENTIFIED BY 'sonar';
+GRANT ALL ON sonar.* TO 'sonar'@'localhost' IDENTIFIED BY 'sonar';
+FLUSH PRIVILEGES;
+
+settings.xml
+===
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <pluginGroups>
+  </pluginGroups>
+
+  <proxies>
+  </proxies>
+
+  <servers>
+  </servers>
+
+  <mirrors>
+  </mirrors>
+
+  <profiles>
+   <profile>
+     <id>sonar</id>
+     <activation>
+       <activeByDefault>true</activeByDefault>
+     </activation>
+     <properties>
+       <sonar.host.url>http://localhost:9000</sonar.host.url>
+       <sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
+       <sonar.jdbc.driver>com.mysql.jdbc.Driver</sonar.jdbc.driver>
+       <sonar.jdbc.username>sonar</sonar.jdbc.username>
+       <sonar.jdbc.password>sonar</sonar.jdbc.password>
+     </properties>
+   </profile>
+
+  </profiles>
+
+</settings>

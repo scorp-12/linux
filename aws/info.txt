@@ -1,0 +1,8 @@
+aws configure
+=provide keys
+=region is us-east-1
+to check connectivity
+=aws ec2 describe-regions
+to show instances
+aws ec2 describe-instances
+

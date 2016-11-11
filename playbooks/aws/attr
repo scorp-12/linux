@@ -1,0 +1,438 @@
+
+PLAY [localhost] ***************************************************************
+
+TASK [get ec2 facts] ***********************************************************
+ok: [localhost]
+
+TASK [debug] *******************************************************************
+ok: [localhost] => {
+    "hostvars": {
+        "54.167.112.82": {
+            "ansible_check_mode": false, 
+            "ansible_ssh_host": "54.167.112.82", 
+            "ansible_version": {
+                "full": "2.2.0", 
+                "major": 2, 
+                "minor": 2, 
+                "revision": 0, 
+                "string": "2.2.0"
+            }, 
+            "ec2__in_monitoring_element": false, 
+            "ec2_ami_launch_index": "2", 
+            "ec2_architecture": "x86_64", 
+            "ec2_block_devices": {
+                "xvda": "vol-0ac0b458639f5b192"
+            }, 
+            "ec2_client_token": "", 
+            "ec2_dns_name": "ec2-54-167-112-82.compute-1.amazonaws.com", 
+            "ec2_ebs_optimized": false, 
+            "ec2_eventsSet": "", 
+            "ec2_group_name": "", 
+            "ec2_hypervisor": "xen", 
+            "ec2_id": "i-0b4b1007d428e0674", 
+            "ec2_image_id": "ami-c481fad3", 
+            "ec2_instance_profile": "", 
+            "ec2_instance_type": "t2.micro", 
+            "ec2_ip_address": "54.167.112.82", 
+            "ec2_item": "", 
+            "ec2_kernel": "", 
+            "ec2_key_name": "k1", 
+            "ec2_launch_time": "2016-10-18T06:10:18.000Z", 
+            "ec2_monitored": false, 
+            "ec2_monitoring": "", 
+            "ec2_monitoring_state": "disabled", 
+            "ec2_persistent": false, 
+            "ec2_placement": "us-east-1a", 
+            "ec2_platform": "", 
+            "ec2_previous_state": "", 
+            "ec2_previous_state_code": 0, 
+            "ec2_private_dns_name": "ip-172-31-48-207.ec2.internal", 
+            "ec2_private_ip_address": "172.31.48.207", 
+            "ec2_public_dns_name": "ec2-54-167-112-82.compute-1.amazonaws.com", 
+            "ec2_ramdisk": "", 
+            "ec2_reason": "", 
+            "ec2_region": "us-east-1", 
+            "ec2_requester_id": "", 
+            "ec2_root_device_name": "/dev/xvda", 
+            "ec2_root_device_type": "ebs", 
+            "ec2_security_group_ids": "sg-5197072b", 
+            "ec2_security_group_names": "default", 
+            "ec2_sourceDestCheck": "true", 
+            "ec2_spot_instance_request_id": "", 
+            "ec2_state": "running", 
+            "ec2_state_code": 16, 
+            "ec2_state_reason": "", 
+            "ec2_subnet_id": "subnet-14ce2c39", 
+            "ec2_virtualization_type": "hvm", 
+            "ec2_vpc_id": "vpc-0d0c5d6a", 
+            "group_names": [
+                "ami_c481fad3", 
+                "ec2", 
+                "i-0b4b1007d428e0674", 
+                "key_k1", 
+                "security_group_default", 
+                "tag_none", 
+                "type_t2_micro", 
+                "us-east-1", 
+                "us-east-1a", 
+                "vpc_id_vpc_0d0c5d6a"
+            ], 
+            "groups": {
+                "all": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "ami_c481fad3": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "ec2": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "i-062611ba32390d146": [
+                    "54.224.177.41"
+                ], 
+                "i-0b4b1007d428e0674": [
+                    "54.167.112.82"
+                ], 
+                "i-0d82fcba0efce20d4": [
+                    "54.197.67.140"
+                ], 
+                "key_k1": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "security_group_default": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "tag_none": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "type_t2_micro": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "ungrouped": [
+                    "localhost"
+                ], 
+                "us-east-1": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "us-east-1a": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "vpc_id_vpc_0d0c5d6a": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ]
+            }, 
+            "inventory_dir": "/etc/ansible", 
+            "inventory_file": "/etc/ansible/ec2.py", 
+            "inventory_hostname": "54.167.112.82", 
+            "inventory_hostname_short": "54", 
+            "omit": "__omit_place_holder__175599277ce19e8824c4edda0a7dee56a5420ef8", 
+            "playbook_dir": "/home/ded/git/linux/aws/ansible/playbooks"
+        }, 
+        "54.197.67.140": {
+            "ansible_check_mode": false, 
+            "ansible_ssh_host": "54.197.67.140", 
+            "ansible_version": {
+                "full": "2.2.0", 
+                "major": 2, 
+                "minor": 2, 
+                "revision": 0, 
+                "string": "2.2.0"
+            }, 
+            "ec2__in_monitoring_element": false, 
+            "ec2_ami_launch_index": "0", 
+            "ec2_architecture": "x86_64", 
+            "ec2_block_devices": {
+                "xvda": "vol-09f1bf9bebfb2644b"
+            }, 
+            "ec2_client_token": "", 
+            "ec2_dns_name": "ec2-54-197-67-140.compute-1.amazonaws.com", 
+            "ec2_ebs_optimized": false, 
+            "ec2_eventsSet": "", 
+            "ec2_group_name": "", 
+            "ec2_hypervisor": "xen", 
+            "ec2_id": "i-0d82fcba0efce20d4", 
+            "ec2_image_id": "ami-c481fad3", 
+            "ec2_instance_profile": "", 
+            "ec2_instance_type": "t2.micro", 
+            "ec2_ip_address": "54.197.67.140", 
+            "ec2_item": "", 
+            "ec2_kernel": "", 
+            "ec2_key_name": "k1", 
+            "ec2_launch_time": "2016-10-18T06:10:18.000Z", 
+            "ec2_monitored": false, 
+            "ec2_monitoring": "", 
+            "ec2_monitoring_state": "disabled", 
+            "ec2_persistent": false, 
+            "ec2_placement": "us-east-1a", 
+            "ec2_platform": "", 
+            "ec2_previous_state": "", 
+            "ec2_previous_state_code": 0, 
+            "ec2_private_dns_name": "ip-172-31-48-205.ec2.internal", 
+            "ec2_private_ip_address": "172.31.48.205", 
+            "ec2_public_dns_name": "ec2-54-197-67-140.compute-1.amazonaws.com", 
+            "ec2_ramdisk": "", 
+            "ec2_reason": "", 
+            "ec2_region": "us-east-1", 
+            "ec2_requester_id": "", 
+            "ec2_root_device_name": "/dev/xvda", 
+            "ec2_root_device_type": "ebs", 
+            "ec2_security_group_ids": "sg-5197072b", 
+            "ec2_security_group_names": "default", 
+            "ec2_sourceDestCheck": "true", 
+            "ec2_spot_instance_request_id": "", 
+            "ec2_state": "running", 
+            "ec2_state_code": 16, 
+            "ec2_state_reason": "", 
+            "ec2_subnet_id": "subnet-14ce2c39", 
+            "ec2_virtualization_type": "hvm", 
+            "ec2_vpc_id": "vpc-0d0c5d6a", 
+            "group_names": [
+                "ami_c481fad3", 
+                "ec2", 
+                "i-0d82fcba0efce20d4", 
+                "key_k1", 
+                "security_group_default", 
+                "tag_none", 
+                "type_t2_micro", 
+                "us-east-1", 
+                "us-east-1a", 
+                "vpc_id_vpc_0d0c5d6a"
+            ], 
+            "groups": {
+                "all": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "ami_c481fad3": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "ec2": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "i-062611ba32390d146": [
+                    "54.224.177.41"
+                ], 
+                "i-0b4b1007d428e0674": [
+                    "54.167.112.82"
+                ], 
+                "i-0d82fcba0efce20d4": [
+                    "54.197.67.140"
+                ], 
+                "key_k1": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "security_group_default": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "tag_none": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "type_t2_micro": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "ungrouped": [
+                    "localhost"
+                ], 
+                "us-east-1": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "us-east-1a": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "vpc_id_vpc_0d0c5d6a": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ]
+            }, 
+            "inventory_dir": "/etc/ansible", 
+            "inventory_file": "/etc/ansible/ec2.py", 
+            "inventory_hostname": "54.197.67.140", 
+            "inventory_hostname_short": "54", 
+            "omit": "__omit_place_holder__175599277ce19e8824c4edda0a7dee56a5420ef8", 
+            "playbook_dir": "/home/ded/git/linux/aws/ansible/playbooks"
+        }, 
+        "54.224.177.41": {
+            "ansible_check_mode": false, 
+            "ansible_ssh_host": "54.224.177.41", 
+            "ansible_version": {
+                "full": "2.2.0", 
+                "major": 2, 
+                "minor": 2, 
+                "revision": 0, 
+                "string": "2.2.0"
+            }, 
+            "ec2__in_monitoring_element": false, 
+            "ec2_ami_launch_index": "1", 
+            "ec2_architecture": "x86_64", 
+            "ec2_block_devices": {
+                "xvda": "vol-0823f09953693b074"
+            }, 
+            "ec2_client_token": "", 
+            "ec2_dns_name": "ec2-54-224-177-41.compute-1.amazonaws.com", 
+            "ec2_ebs_optimized": false, 
+            "ec2_eventsSet": "", 
+            "ec2_group_name": "", 
+            "ec2_hypervisor": "xen", 
+            "ec2_id": "i-062611ba32390d146", 
+            "ec2_image_id": "ami-c481fad3", 
+            "ec2_instance_profile": "", 
+            "ec2_instance_type": "t2.micro", 
+            "ec2_ip_address": "54.224.177.41", 
+            "ec2_item": "", 
+            "ec2_kernel": "", 
+            "ec2_key_name": "k1", 
+            "ec2_launch_time": "2016-10-18T06:10:18.000Z", 
+            "ec2_monitored": false, 
+            "ec2_monitoring": "", 
+            "ec2_monitoring_state": "disabled", 
+            "ec2_persistent": false, 
+            "ec2_placement": "us-east-1a", 
+            "ec2_platform": "", 
+            "ec2_previous_state": "", 
+            "ec2_previous_state_code": 0, 
+            "ec2_private_dns_name": "ip-172-31-48-206.ec2.internal", 
+            "ec2_private_ip_address": "172.31.48.206", 
+            "ec2_public_dns_name": "ec2-54-224-177-41.compute-1.amazonaws.com", 
+            "ec2_ramdisk": "", 
+            "ec2_reason": "", 
+            "ec2_region": "us-east-1", 
+            "ec2_requester_id": "", 
+            "ec2_root_device_name": "/dev/xvda", 
+            "ec2_root_device_type": "ebs", 
+            "ec2_security_group_ids": "sg-5197072b", 
+            "ec2_security_group_names": "default", 
+            "ec2_sourceDestCheck": "true", 
+            "ec2_spot_instance_request_id": "", 
+            "ec2_state": "running", 
+            "ec2_state_code": 16, 
+            "ec2_state_reason": "", 
+            "ec2_subnet_id": "subnet-14ce2c39", 
+            "ec2_virtualization_type": "hvm", 
+            "ec2_vpc_id": "vpc-0d0c5d6a", 
+            "group_names": [
+                "ami_c481fad3", 
+                "ec2", 
+                "i-062611ba32390d146", 
+                "key_k1", 
+                "security_group_default", 
+                "tag_none", 
+                "type_t2_micro", 
+                "us-east-1", 
+                "us-east-1a", 
+                "vpc_id_vpc_0d0c5d6a"
+            ], 
+            "groups": {
+                "all": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "ami_c481fad3": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "ec2": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "i-062611ba32390d146": [
+                    "54.224.177.41"
+                ], 
+                "i-0b4b1007d428e0674": [
+                    "54.167.112.82"
+                ], 
+                "i-0d82fcba0efce20d4": [
+                    "54.197.67.140"
+                ], 
+                "key_k1": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "security_group_default": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "tag_none": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "type_t2_micro": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "ungrouped": [
+                    "localhost"
+                ], 
+                "us-east-1": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "us-east-1a": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ], 
+                "vpc_id_vpc_0d0c5d6a": [
+                    "54.224.177.41", 
+                    "54.197.67.140", 
+                    "54.167.112.82"
+                ]
+            }, 
+            "inventory_dir": "/etc/ansible", 
+            "inventory_file": "/etc/ansible/ec2.py", 
+            "inventory_hostname": "54.224.177.41", 
+            "inventory_hostname_short": "54", 
+            "omit": "__omit_place_holder__175599277ce19e8824c4edda0a7dee56a5420ef8", 
+            "playbook_dir": "/home/ded/git/linux/aws/ansible/playbooks"
+        }
+    }
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=0    unreachable=0    failed=0   
+

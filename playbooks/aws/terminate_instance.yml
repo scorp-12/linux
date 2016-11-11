@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files:
+  - files/awskreds.yml
+  tasks:
+  - ec2_remote_facts:
+      region: us-east-1
+    register: ec2
+  - debug: msg="{{ ec2.instances[0].id }}"
+
+  - name: remove ec2 instance 
+    ec2:
+      state: absent
+      region: us-east-1
+      instance_ids: "{{ ec2.instances[0].id }}"

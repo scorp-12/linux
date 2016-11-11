@@ -1,0 +1,13 @@
+---
+- name: start local docker image
+  hosts: localhost
+  tasks:
+#  - name: fake start
+#    shell: docker run --name test1 -itd ubuntu
+#  - name: stop fake start
+#    shell: docker stop test1
+  - name: stop docker
+    docker_container:
+      name: test1
+      image: ubuntu
+      state: started

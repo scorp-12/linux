@@ -1,0 +1,80 @@
+1) Chef server install
+wget https://packages.chef.io/stable/el/7/chef-server-core-12.6.0-1.el7.x86_64.rpm
+sudo rpm -ivh chef-server-core-12.6.0-1.el7.x86_64.rpm
+sudo chef-server-ctl reconfigure
+sudo -s
+cd ~
+mkdir .chef
+chef-server-ctl user-create ded ded_fname ded_lname dd@us.ua <passwprd> --filename ~/.chef/ded.pem
+chef-server-ctl org-create ded_org ded_org_fname --association_user ded --filename ~/.chef/ded_org_validator.pem
+curl -L https://www.opscode.com/chef/install.sh | sudo bash
+sudo yum install git -y
+git clone git://github.com/opscode/chef-repo.git
+mv .chef/ chef-repo/.
+cd  chef-repo/.chef/
+touch knife.rb
+vim knife.rb
+===
+log_level                :info
+log_location             STDOUT
+node_name                'ded'
+client_key               '~/chef-repo/.chef/ded.pem'
+validation_client_name   'ded_org-validator'
+validation_key           '~/chef-repo/.chef/ded_org_validator.pem'
+chef_server_url          'https://ddedukhov1.mylabserver.com/organizations/ded_org' #### urgent hostname should be the same as hostname for server, 
+										    #### if not ssl trouble will be
+syntax_check_cache_path  '~/chef-repo/.chef/syntax_check_cache'
+cookbook_path [ '~/chef-repo/cookbooks' ]
+
+===
+knife ssl fetch
+knife ssl check
+knife client list ## should be "ded_org-validator"
+
+NODE BOOTSTRAP
+
+1) add root login to ssh config
+cd /etc/ssh
+vim sshd_config
+uncomment PermitRootLogin yes
+service sshd restart
+3) bootstrap the nodes:
+knife bootstrap <node ip or DNS > -x root -P <password> -N <node name for cheff>
+4) create cookbook 
+knife cookbook create apache
+5) upload cookbook to chef
+knife cookbook upload apache
+6) add recipe to particular node 
+knife node run_list add <node_name> "recipe[apache]"
+7) run chef client on a node
+sudo chef-client
+8) remove validatiom.pem key from nodes
+recipe:
+=====
+file "/etc/chef/validation.pem" do
+        action :delete
+end
+=====
+9) knife node show ded9 ## show attributes for node 9
+10) knife node show ded9 -a apache ## show particular attribute
+knife node show ded9 -a memory.swap
+11)  knife search node "os:linux" ## search nodes with particular parameters:
+12) knife search node "ipaddress:*" -a apache ## search nodes with attribute ipaddress and show at that node attibute apache
+knife search node "kernel_release:*"  -a kernel.release
+nife search node "kernel_release:* OR ipaddress:*"  -a platform_family
+nife search node "kernel_release:* AND ipaddress:*"  -a platform_family
+
+10) environment
+knife environment list -w
+knife environment from file dev.rb
+knife environment compare prod
+knife environment show dev
+
+====
+roles
+
+knife node run_list add ded3 "role[webserver]"
+
+
+
+akamai fastly

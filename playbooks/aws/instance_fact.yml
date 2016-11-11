@@ -1,0 +1,12 @@
+---
+- hosts: aws 
+  remote_user: ec2-user
+  become_method: sudo
+  gather_facts: yes
+  connection: ssh
+  tasks:
+  - name: ls -la
+    action: ec2_facts
+    register: result
+  - name: show output
+    debug: msg= '{{ ansible_ec2_instance_id }}'

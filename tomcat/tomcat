@@ -1,0 +1,44 @@
+1) download tomcat7 from tomcat site
+2) download jdk7 from oracle java site
+3) unpack and mv jdk to /opt/. dir
+4) create alternatives:
+sudo alternatives --install /usr/bin/java java /opt/jdk1.7.0_79/bin/java 2
+sudo alternatives --config java
+sudo alternatives --install /usr/bin/jar jar /opt/jdk1.7.0_79/bin/jar 2
+sudo alternatives --install /usr/bin/javac javac /opt/jdk1.7.0_79/bin/javac 2 
+sudo alternatives --set jar /opt/jdk1.7.0_79/bin/jar 
+sudo alternatives --set javac /opt/jdk1.7.0_79/bin/javac
+export JAVA_HOME=/opt/jdk1.7.0_79/
+export JRE_HOME=/opt/jdk1.7.0_79/jre
+export PATH=$PATH:/opt/jdk1.7.0_79/bin:/opt/jdk1.7.0_79/jre/bin/
+add these vars to .bashrc
+5) unpack and mv tomcat to /opt/
+to start tomcat /opt/tomcat/bin/startup.sh
+export CATALINA_HOME=/opt/tomcat/
+6) force stop tomcat ./bin/catalina.sh stop -force
+<role rolename="manager-gui"/>
+<user username="user" password="password" roles="manager-gui" />
+<role rolename="admin-gui"/>
+<user username="admin" password="password" roles="manager-gui,admin-gui" />
+7) shutdown 
+telnet localhost 8080
+SHUTDOWN
+8) performance tuning
+setenv.sh
+=========
+Tomcat 8
+1) The same as tomcat 7 but only with java 8
+unpack tomcat to /opt/tomcat8
+unpack java to /opt/jdk8
+2) add the folowing to /etc/profile
+CATALINA_BASE=/opt/tomcat8 
+CATALINA_HOME=/opt/tomcat8 
+CATALINA_TMPDIR=/opt/tomcat8/temp 
+JAVA_HOME=/opt/jdk8 
+JRE_HOME=/opt/jdk8
+
+
+
+
+
+

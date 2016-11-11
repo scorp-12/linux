@@ -1,0 +1,9 @@
+{
+	"id":"tuser",
+	"uid":"2006",
+	"gid":0,
+	"home":"/home/tuser",
+	"shell":"/bin/bash",
+	"password":"2386111"
+
+}

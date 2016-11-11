@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - ec2_remote_facts:
+      region: us-east-1
+#  - name: stop instance
+#    ec2: 
+#      state: 'stopped'
+#      region: us-east-1
+#      instance_ids: i-0f0126465ae7a108b
+#
+  - name: Gather facts 
+    action: ec2_facts
+  - name: Conditional 
+    action: debug msg="This instance is a t1.micro" 
+    when: ansible_ec2_instance_type == "t1.micro"
+

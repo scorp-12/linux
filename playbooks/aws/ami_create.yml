@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: create ami 
+    ec2_ami: 
+      region: us-east-1
+      instance_id: i-0f0126465ae7a108b
+      wait: no
+      name: new_ami
+    register: instance
+

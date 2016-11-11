@@ -1,0 +1,11 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: copy ami 
+    ec2_ami_copy: 
+      source_region: us-east-1
+      region: us-west-1
+      source_image_id: ami-9d1d4b8a
+

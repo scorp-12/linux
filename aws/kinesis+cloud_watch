@@ -1,0 +1,95 @@
+create role with full access for aws cloud_watch and assign this role to new EC2 instance then at this instance:
+
+sudo yum install -y awslogs
+sudo vim /etc/awscli/awscli.conf
++++++
+[plugins]
+cwlogs = cwlogs
+[default]
+region = us-east-1
+sudo yum -y install httpd
+sudo service httpd start
+cd /etc/awslogs/
+sudo vim awslogs.conf
+++++++
+[/var/log/httpd/access_log]
+datetime_format = %b %d %H:%M:%S
+file = /var/log/httpd/access_log
+buffer_duration = 5000
+log_stream_name = {instance_id}
+initial_position = start_of_file
+log_group_name = /var/log/httpd/access_log
++++++
+sudo service awslogs restart
+
+goto aws cloud_watch -> logs and see the logs from httpd
+
+=========
+Kinesis
+
+aws configure
++++++
+Default region name [us-east-1]
++++++
+
+vim permissions.json
+
+++++++
+{
+        "Statement": [
+                {
+                        "Effect" : "Allow",
+                        "Action" : "kinesis:PutRecord",
+                        "Resource" : "arn:aws:kinesis:us-east-1:558579605696:stream/httpd-logs-app-a"
+                },
+
+                {
+                        "Effect": "Allow",
+                        "Action": "iam:PassRole",
+                        "Resource": "arn:aws:iam::558579605696:role/cloud-watch-to-kinesis"
+                }
+        ]
+}
+
+++++
+
+vim role.json
+
+++++
+
+{
+        "Statement":{
+                "Effect": "Allow",
+                "Principal": { "Service": "logs.us-east-1.amazonaws.com"},
+                "Action": "sts:AssumeRole"
+        }
+
+}
+
+++++
+
+
+aws kinesis create-stream --stream-name httpd-logs-app-a --shard-count 1                                                             
+aws kinesis describe-stream --stream-name "httpd-logs-app-a"
+
+provide infor from last command to permissions.json
+
+aws iam create-role --role-name "cloud-watch-to-kinesis" --assume-role-policy-document file://role.json
+aws iam put-role-policy --role-name cloud-watch-to-kinesis  --policy-name permissions-for-kinesis --policy-document file://permission
+s.json
+
+aws logs put-subscription-filter --log-group-name /var/log/httpd/access_log --filter-name "central-log" --filter-pattern "" --destin
+ation-arn arn:aws:kinesis:us-east-1:558579605696:stream/httpd-logs-app-a --role-arn arn:aws:iam::558579605696:role/cloud-watch-to-kinesis
+
+aws logs describe-subscription-filters --log-group-name /var/log/httpd/access_log
+
+aws kinesis get-shard-iterator --stream-name httpd-logs-app-a --shard-id shardId-000000000000 --shard-iterator-type TRIM_HORIZON
+
+aws kinesis get-records --shard-iterator "AAAAAAAAAAHU2y........
+
+get info from iterator and decode it:
+
+cat text | base64 -d | zcat
+
+
+

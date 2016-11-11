@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+#  remote_user: ded
+#  become: yes
+#  become_method: sudo
+  gather_facts: no
+  vars_files:
+  - files/awskreds.yml
+  tasks:
+  - name: create a new keys
+    ec2_key: 
+      aws_access_key: '{{ aws_id }}'
+      aws_secret_key: '{{ aws_key }}'
+      name: superpupermegakey
+      region: us-east-1
+      state: absent
